@@ -220,7 +220,143 @@ namespace HearthMirror
 			return null;
 		}
 
-		public static bool IsFriendsListVisible() => TryGetInternal(() => Mirror.Root["ChatMgr"]["s_instance"]["m_friendListFrame"] != null);
+		public static bool IsFriendsListVisible() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["ChatMgr"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_friendListFrame"];
+			if (o == null) return false;
+			return true;
+		});
+
+		public static bool IsGameMenuVisible() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["GameMenu"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_isShown"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static bool IsOptionsMenuVisible() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["OptionsMenu"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_isShown"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+		public static bool IsMulligan() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["MulliganManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["mulliganChooseBanner"];
+			if (o == null) return false;
+			return true;
+		});
+
+		public static bool IsChoosingCard() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["ChoiceCardMgr"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			var o1 = o["m_subOptionState"];
+			if (o1 != null) return true;
+
+			o = o["m_choiceStateMap"];
+			if (o == null) return false;
+			o = o["count"];
+			if (o == null) return false;
+			return (int)o > 0;
+		});
+
+		public static bool IsPlayerEmotesVisible() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["MulliganManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_emotesShown"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static bool IsEnemyEmotesVisible() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["EnemyEmoteHandler"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_emotesShown"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static bool IsInBattlecryEffect() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_isInBattleCryEffect"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static bool IsDragging() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_dragging"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static bool IsTargetingHeroPower() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_targettingHeroPower"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static int BattlecrySourceCardZonePosition() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return 0;
+			o = o["s_instance"];
+			if (o == null) return 0;
+			o = o["m_battlecrySourceCard"];
+			if (o == null) return 0;
+			o = o["m_zonePosition"];
+			if (o == null) return 0;
+			return (int)o;
+		});
+
+		public static bool IsHoldingCard() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_heldCard"];
+			if (o == null) return false;
+			return true;
+		});
 
 		public static int GetCurrentManaFilter() => TryGetInternal(() => (int)Mirror.Root["CollectionManagerDisplay"]["s_instance"]["m_manaTabManager"]["m_currentFilterValue"]);
 
