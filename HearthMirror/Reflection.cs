@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using HearthMirror.Enums;
@@ -30,6 +31,38 @@ namespace HearthMirror
 		GENERAL_STORE,
 		ARENA_STORE,
 		QUEST_LOG,
+	}
+
+	public enum SceneMode
+	{
+		INVALID,
+		STARTUP,
+		[Description("Login")]
+		LOGIN,
+		[Description("Hub")]
+		HUB,
+		[Description("Gameplay")]
+		GAMEPLAY,
+		[Description("CollectionManager")]
+		COLLECTIONMANAGER,
+		[Description("PackOpening")]
+		PACKOPENING,
+		[Description("Tournament")]
+		TOURNAMENT,
+		[Description("Friendly")]
+		FRIENDLY,
+		[Description("FatalError")]
+		FATAL_ERROR,
+		[Description("Draft")]
+		DRAFT,
+		[Description("Credits")]
+		CREDITS,
+		[Description("Reset")]
+		RESET,
+		[Description("Adventure")]
+		ADVENTURE,
+		[Description("TavernBrawl")]
+		TAVERN_BRAWL,
 	}
 
 	public class Reflection
@@ -431,41 +464,15 @@ namespace HearthMirror
 			return list;
 		});
 
-        public static string GetCurrentSceneName() => TryGetInternal(() =>
+        public static SceneMode GetCurrentSceneMode() => TryGetInternal(() =>
 		{
 			var o = Mirror.Root["SceneMgr"];
-			if (o == null) return null;
+			if (o == null) return SceneMode.INVALID;
 			o = o["s_instance"];
-			if (o == null) return null;
-			var currentScene = o["m_scene"];
-			if (currentScene == null) return null;
-
-			var sceneNames = new List<string>()
-			{
-				"FriendlyScene",
-				"AdventureScene",
-				"CollectionManagerScene",
-				"CreditsScene",
-				"DraftScene",
-				"FatalErrorScene",
-				"LoadingScreen",
-				"PackOpeningScene",
-				"TavernBrawlScene",
-				"TournamentScene",
-			};
-
-			foreach (var sceneName in sceneNames)
-			{
-				o = Mirror.Root[sceneName];
-				if (o == null) return null;
-				o = o["s_instance"];
-				if (o != null && o == currentScene)
-				{
-					return sceneName;
-				}
-            }
-
-			return null;
+			if (o == null) return SceneMode.INVALID;
+			o = o["m_mode"];
+			if (o == null) return SceneMode.INVALID;
+			return (SceneMode)o;
 		});
 
 		public static int GetCurrentManaFilter() => TryGetInternal(() => (int)Mirror.Root["CollectionManagerDisplay"]["s_instance"]["m_manaTabManager"]["m_currentFilterValue"]);
