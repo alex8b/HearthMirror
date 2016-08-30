@@ -1,11 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using HearthMirror.Enums;
 using HearthMirror.Objects;
 
 namespace HearthMirror
 {
+	public enum BoxState
+	{
+		INVALID,
+		STARTUP,
+		PRESS_START,
+		LOADING,
+		LOADING_HUB,
+		HUB,
+		HUB_WITH_DRAWER,
+		OPEN,
+		CLOSED,
+		ERROR,
+		SET_ROTATION_LOADING,
+		SET_ROTATION,
+		SET_ROTATION_OPEN,
+	}
+
+	public enum UI_WINDOW
+	{
+		NONE,
+		GENERAL_STORE,
+		ARENA_STORE,
+		QUEST_LOG,
+	}
+
 	public class Reflection
 	{
 		private static readonly Lazy<Mirror> LazyMirror = new Lazy<Mirror>(() => new Mirror {ImageName = "Hearthstone"});
@@ -356,6 +382,90 @@ namespace HearthMirror
 			o = o["m_heldCard"];
 			if (o == null) return false;
 			return true;
+		});
+
+		public static bool IsInMainMenu() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["Box"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_state"];
+			if (o == null) return false;
+			if ((int)o == (int)BoxState.HUB_WITH_DRAWER)
+			{
+				return true;
+			}
+			return false;
+		});
+		public static UI_WINDOW GetShownUiWindowId() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["ShownUIMgr"];
+			if (o == null) return UI_WINDOW.NONE;
+			o = o["s_instance"];
+			if (o == null) return UI_WINDOW.NONE;
+			o = o["m_shownUI"];
+			if (o == null) return UI_WINDOW.NONE;
+			return (UI_WINDOW) o;
+		});
+
+		public static List<Point> GetCardPositionsInHand() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return null;
+			o = o["s_instance"];
+			if (o == null) return null;
+			o = o["m_myHandZone"]; //m_myPlayZone
+			if (o == null) return null;
+			o = o["m_cards"];
+			if (o == null) return null;
+			int size = o["_size"];
+			var items = o["_items"];
+
+			var list = new List<Point>();
+            for (var i = 0; i < size; i++)
+			{
+				var card = items[i];
+				if (card == null) return null;
+            }
+			return list;
+		});
+
+        public static string GetCurrentSceneName() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["SceneMgr"];
+			if (o == null) return null;
+			o = o["s_instance"];
+			if (o == null) return null;
+			var currentScene = o["m_scene"];
+			if (currentScene == null) return null;
+
+			var sceneNames = new List<string>()
+			{
+				"FriendlyScene",
+				"AdventureScene",
+				"CollectionManagerScene",
+				"CreditsScene",
+				"DraftScene",
+				"FatalErrorScene",
+				"LoadingScreen",
+				"PackOpeningScene",
+				"TavernBrawlScene",
+				"TournamentScene",
+			};
+
+			foreach (var sceneName in sceneNames)
+			{
+				o = Mirror.Root[sceneName];
+				if (o == null) return null;
+				o = o["s_instance"];
+				if (o != null && o == currentScene)
+				{
+					return sceneName;
+				}
+            }
+
+			return null;
 		});
 
 		public static int GetCurrentManaFilter() => TryGetInternal(() => (int)Mirror.Root["CollectionManagerDisplay"]["s_instance"]["m_manaTabManager"]["m_currentFilterValue"]);
