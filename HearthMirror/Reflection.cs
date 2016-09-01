@@ -417,6 +417,28 @@ namespace HearthMirror
 			return true;
 		});
 
+		public static bool IsTargetReticleActive() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["TargetReticleManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_isActive"];
+			if (o == null) return false;
+			return o;
+		});
+
+		public static bool IsEnemyTargeting() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_isEnemyArrow"];
+			if (o == null) return false;
+			return o;
+		});
+
 		public static bool IsInMainMenu() => TryGetInternal(() =>
 		{
 			var o = Mirror.Root["Box"];
