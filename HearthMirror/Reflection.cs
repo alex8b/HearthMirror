@@ -150,7 +150,16 @@ namespace HearthMirror
 		public static int GetGameType() => TryGetInternal(InternalGetGameType);
 		private static int InternalGetGameType() => (int) Mirror.Root["GameMgr"]["s_instance"]["m_gameType"];
 
-		public static bool IsSpectating() => TryGetInternal(() => (bool)Mirror.Root["GameMgr"]["s_instance"]["m_spectator"]);
+		public static bool IsSpectating() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["GameMgr"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_spectator"];
+			if (o == null) return false;
+			return o;
+		});
 
 		public static long GetSelectedDeckInMenu() => TryGetInternal(() => (long)Mirror.Root["DeckPickerTrayDisplay"]["s_instance"]["m_selectedCustomDeckBox"]["m_deckID"]);
 
@@ -435,6 +444,17 @@ namespace HearthMirror
 			o = o["s_instance"];
 			if (o == null) return false;
 			o = o["m_isEnemyArrow"];
+			if (o == null) return false;
+			return o;
+		});
+
+		public static bool IsGameOver() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["GameState"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_gameOver"];
 			if (o == null) return false;
 			return o;
 		});
