@@ -497,6 +497,17 @@ namespace HearthMirror
 			return (SceneMode)o;
 		});
 
+		public static int GetNavigationHistorySize() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["Navigation"];
+			if (o == null) return 0;
+			o = o["history"];
+			if (o == null) return 0;
+			o = o["_size"];
+			if (o == null) return 0;
+			return o;
+		});
+
 		public static int GetCurrentManaFilter() => TryGetInternal(() => (int)Mirror.Root["CollectionManagerDisplay"]["s_instance"]["m_manaTabManager"]["m_currentFilterValue"]);
 
 		public static SetFilterItem GetCurrentSetFilter() => TryGetInternal(GetCurrentSetFilterInternal);
