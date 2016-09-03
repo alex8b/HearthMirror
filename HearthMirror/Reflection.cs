@@ -434,7 +434,7 @@ namespace HearthMirror
 			if (o == null) return false;
 			o = o["m_isActive"];
 			if (o == null) return false;
-			return o;
+			return (bool)o;
 		});
 
 		public static bool IsEnemyTargeting() => TryGetInternal(() =>
@@ -445,7 +445,7 @@ namespace HearthMirror
 			if (o == null) return false;
 			o = o["m_isEnemyArrow"];
 			if (o == null) return false;
-			return o;
+			return (bool)o;
 		});
 
 		public static bool IsGameOver() => TryGetInternal(() =>
@@ -456,7 +456,7 @@ namespace HearthMirror
 			if (o == null) return false;
 			o = o["m_gameOver"];
 			if (o == null) return false;
-			return o;
+			return (bool)o;
 		});
 
 		public static bool IsInMainMenu() => TryGetInternal(() =>
@@ -525,7 +525,7 @@ namespace HearthMirror
 			if (o == null) return 0;
 			o = o["_size"];
 			if (o == null) return 0;
-			return o;
+			return (int)o;
 		});
 
 		public static int GetCurrentManaFilter() => TryGetInternal(() => (int)Mirror.Root["CollectionManagerDisplay"]["s_instance"]["m_manaTabManager"]["m_currentFilterValue"]);
