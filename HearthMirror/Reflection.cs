@@ -331,6 +331,19 @@ namespace HearthMirror
 			return true;
 		});
 
+		public static int NumMulliganCards() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["MulliganManager"];
+			if (o == null) return 0;
+			o = o["s_instance"];
+			if (o == null) return 0;
+			o = o["m_startingCards"];
+			if (o == null) return 0;
+			o = o["_size"];
+			if (o == null) return 0;
+			return (int)o;
+		});
+
 		public static bool IsChoosingCard() => TryGetInternal(() =>
 		{
 			var o = Mirror.Root["ChoiceCardMgr"];
@@ -345,6 +358,19 @@ namespace HearthMirror
 			o = o["count"];
 			if (o == null) return false;
 			return (int)o > 0;
+		});
+
+		public static int NumChoiceCards() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["ChoiceCardMgr"];
+			if (o == null) return 0;
+			o = o["s_instance"];
+			if (o == null) return 0;
+			o = o["m_lastShownChoices"];
+			if (o == null) return 0;
+			o = o["_size"];
+			if (o == null) return 0;
+			return (int)o;
 		});
 
 		public static bool IsPlayerEmotesVisible() => TryGetInternal(() =>
@@ -484,29 +510,33 @@ namespace HearthMirror
 			return (UI_WINDOW) o;
 		});
 
-		public static List<Point> GetCardPositionsInHand() => TryGetInternal(() =>
+		public static bool IsPlayerHandZoneUpdatingLayout() => TryGetInternal(() =>
 		{
 			var o = Mirror.Root["InputManager"];
-			if (o == null) return null;
+			if (o == null) return false;
 			o = o["s_instance"];
-			if (o == null) return null;
+			if (o == null) return false;
 			o = o["m_myHandZone"]; //m_myPlayZone
-			if (o == null) return null;
-			o = o["m_cards"];
-			if (o == null) return null;
-			int size = o["_size"];
-			var items = o["_items"];
-
-			var list = new List<Point>();
-            for (var i = 0; i < size; i++)
-			{
-				var card = items[i];
-				if (card == null) return null;
-            }
-			return list;
+			if (o == null) return false;
+			o = o["m_updatingLayout"];
+			if (o == null) return false;
+			return (bool) o;
 		});
 
-        public static SceneMode GetCurrentSceneMode() => TryGetInternal(() =>
+		public static bool IsPlayerPlayZoneUpdatingLayout() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return false;
+			o = o["s_instance"];
+			if (o == null) return false;
+			o = o["m_myPlayZone"];
+			if (o == null) return false;
+			o = o["m_updatingLayout"];
+			if (o == null) return false;
+			return (bool)o;
+		});
+
+		public static SceneMode GetCurrentSceneMode() => TryGetInternal(() =>
 		{
 			var o = Mirror.Root["SceneMgr"];
 			if (o == null) return SceneMode.INVALID;
@@ -515,6 +545,36 @@ namespace HearthMirror
 			o = o["m_mode"];
 			if (o == null) return SceneMode.INVALID;
 			return (SceneMode)o;
+		});
+
+		public static int GetNumCardsPlayerHand() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return 0;
+			o = o["s_instance"];
+			if (o == null) return 0;
+			o = o["m_myHandZone"];
+			if (o == null) return 0;
+			o = o["m_cards"];
+			if (o == null) return 0;
+			o = o["_size"];
+			if (o == null) return 0;
+			return (int)o;
+		});
+
+		public static int GetNumCardsPlayerBoard() => TryGetInternal(() =>
+		{
+			var o = Mirror.Root["InputManager"];
+			if (o == null) return 0;
+			o = o["s_instance"];
+			if (o == null) return 0;
+			o = o["m_myPlayZone"];
+			if (o == null) return 0;
+			o = o["m_cards"];
+			if (o == null) return 0;
+			o = o["_size"];
+			if (o == null) return 0;
+			return (int)o;
 		});
 
 		public static int GetNavigationHistorySize() => TryGetInternal(() =>
