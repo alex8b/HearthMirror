@@ -77,4 +77,14 @@ namespace HearthMirror.Objects
 			Amount = amount;
 		}
 	}
+
+	public class MountRewardData : RewardData
+	{
+		public int MountType { get; }
+
+		public MountRewardData(int mountType) : base(RewardType.MOUNT)
+		{
+			MountType = mountType;
+		}
+	}
 }

@@ -83,7 +83,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\RewardData.cs" />
     <Compile Include="Enums\RewardType.cs" />
+    <Compile Include="Objects\SeasonEndInfo.cs" />
     <Compile Include="Status.cs" />
+    <Compile Include="Util\RewardDataParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

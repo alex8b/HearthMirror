@@ -107,7 +107,7 @@ namespace HearthMirror.Tests
 		}
 
 		[TestMethod]
-		public void UI_PackOpening_OpenedPackContaisnCards()
+		public void UI_PackOpening_OpenedPackContainsCards()
 		{
 			var pack = Reflection.GetPackCards();
 			Assert.AreEqual(5, pack.Count);
