@@ -94,7 +94,7 @@ namespace HearthMirror
 		public static int GetGameType() => TryGetInternal(InternalGetGameType);
 		private static int InternalGetGameType() => (int) Mirror.Root["GameMgr"]["s_instance"]["m_gameType"];
 
-		public static bool IsSpectating() => TryGetInternal(() => (bool)Mirror.Root["GameMgr"]["s_instance"]["m_spectator"]);
+		public static bool IsSpectating() => TryGetInternal(() => Mirror.Root["GameMgr"]?["s_instance"]?["m_spectator"] ?? false);
 
 		public static long GetSelectedDeckInMenu() => TryGetInternal(() => (long)Mirror.Root["DeckPickerTrayDisplay"]["s_instance"]["m_selectedCustomDeckBox"]["m_deckID"]);
 
@@ -230,7 +230,56 @@ namespace HearthMirror
 			return null;
 		}
 
-		public static bool IsFriendsListVisible() => TryGetInternal(() => (bool)(Mirror.Root["ChatMgr"]["s_instance"]["m_friendListFrame"] != null));
+		public static bool IsFriendsListVisible() => TryGetInternal(() => Mirror.Root["ChatMgr"]?["s_instance"]?["m_friendListFrame"] != null);
+
+		public static bool IsGameMenuVisible() => TryGetInternal(() => Mirror.Root["GameMenu"]?["s_instance"]?["m_isShown"] ?? false);
+
+		public static bool IsOptionsMenuVisible() => TryGetInternal(() => Mirror.Root["OptionsMenu"]?["s_instance"]?["m_isShown"] ?? false);
+
+		public static bool IsMulligan() => TryGetInternal(() => Mirror.Root["MulliganManager"]?["s_instance"]?["mulliganChooseBanner"] != null);
+
+		public static int NumMulliganCards() => TryGetInternal(() => Mirror.Root["MulliganManager"]?["s_instance"]?["m_startingCards"]?["_size"] ?? 0);
+
+		public static bool IsChoosingCard() => TryGetInternal(() => Mirror.Root["ChoiceCardMgr"]?["s_instance"]?["m_subOptionState"] != null)
+				|| TryGetInternal(() => (int)(Mirror.Root["ChoiceCardMgr"]?["s_instance"]?["m_choiceStateMap"]?["count"] ?? 0) > 0);
+
+		public static int NumChoiceCards() => TryGetInternal(() => Mirror.Root["ChoiceCardMgr"]?["s_instance"]?["m_lastShownChoices"]?["_size"] ?? 0);
+
+		public static bool IsPlayerEmotesVisible() => TryGetInternal(() => Mirror.Root["MulliganManager"]?["s_instance"]?["m_emotesShown"] ?? false);
+
+		public static bool IsEnemyEmotesVisible() => TryGetInternal(() => Mirror.Root["EnemyEmoteHandler"]?["s_instance"]?["m_emotesShown"] ?? false);
+
+		public static bool IsInBattlecryEffect() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_isInBattleCryEffect"] ?? false);
+
+		public static bool IsDragging() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_dragging"] ?? false);
+
+		public static bool IsTargetingHeroPower() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_targettingHeroPower"] ?? false);
+
+		public static int BattlecrySourceCardZonePosition() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_battlecrySourceCard"]?["m_zonePosition"] ?? 0);
+
+		public static bool IsHoldingCard() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_heldCard"] != null);
+
+		public static bool IsTargetReticleActive() => TryGetInternal(() => Mirror.Root["TargetReticleManager"]?["s_instance"]?["m_isActive"] ?? false);
+
+		public static bool IsEnemyTargeting() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_isEnemyArrow"] ?? false);
+
+		public static bool IsGameOver() => TryGetInternal(() => Mirror.Root["GameState"]?["s_instance"]?["m_gameOver"] ?? false);
+
+		public static bool IsInMainMenu() => TryGetInternal(() => (int)(Mirror.Root["Box"]?["s_instance"]?["m_state"] ?? -1) == (int)BoxState.HUB_WITH_DRAWER);
+
+		public static UI_WINDOW GetShownUiWindowId() => TryGetInternal(() => (UI_WINDOW)(Mirror.Root["ShownUIMgr"]?["s_instance"]?["m_shownUI"] ?? UI_WINDOW.NONE));
+
+		public static bool IsPlayerHandZoneUpdatingLayout() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_myHandZone"]?["m_updatingLayout"] ?? false);
+
+		public static bool IsPlayerPlayZoneUpdatingLayout() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_myPlayZone"]?["m_updatingLayout"] ?? false);
+
+		public static SceneMode GetCurrentSceneMode() => TryGetInternal(() => (SceneMode)(Mirror.Root["SceneMgr"]?["s_instance"]?["m_mode"] ?? SceneMode.INVALID));
+
+		public static int GetNumCardsPlayerHand() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_myHandZone"]?["m_cards"]?["_size"] ?? 0);
+
+		public static int GetNumCardsPlayerBoard() => TryGetInternal(() => Mirror.Root["InputManager"]?["s_instance"]?["m_myPlayZone"]?["m_cards"]?["_size"] ?? 0);
+
+		public static int GetNavigationHistorySize() => TryGetInternal(() => Mirror.Root["Navigation"]?["history"]?["_size"] ?? 0);
 
 		public static int GetCurrentManaFilter() => TryGetInternal(() => (int)Mirror.Root["CollectionManagerDisplay"]["s_instance"]["m_manaTabManager"]["m_currentFilterValue"]);
 

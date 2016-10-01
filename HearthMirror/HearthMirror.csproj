@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\BoxState.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\Status.cs" />
     <Compile Include="Objects\BattleTag.cs" />
@@ -84,7 +85,9 @@
     <Compile Include="Objects\RewardData.cs" />
     <Compile Include="Enums\RewardType.cs" />
     <Compile Include="Objects\SeasonEndInfo.cs" />
+    <Compile Include="Enums\SceneMode.cs" />
     <Compile Include="Status.cs" />
+    <Compile Include="Enums\UI_WINDOW.cs" />
     <Compile Include="Util\RewardDataParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

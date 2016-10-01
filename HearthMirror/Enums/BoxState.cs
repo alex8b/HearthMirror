@@ -1,0 +1,19 @@
+namespace HearthMirror.Enums
+{
+	public enum BoxState
+	{
+		INVALID,
+		STARTUP,
+		PRESS_START,
+		LOADING,
+		LOADING_HUB,
+		HUB,
+		HUB_WITH_DRAWER,
+		OPEN,
+		CLOSED,
+		ERROR,
+		SET_ROTATION_LOADING,
+		SET_ROTATION,
+		SET_ROTATION_OPEN,
+	}
+}

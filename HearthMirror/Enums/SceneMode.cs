@@ -1,0 +1,21 @@
+namespace HearthMirror.Enums
+{
+	public enum SceneMode
+	{
+		INVALID,
+		STARTUP,
+		LOGIN,
+		HUB,
+		GAMEPLAY,
+		COLLECTIONMANAGER,
+		PACKOPENING,
+		TOURNAMENT,
+		FRIENDLY,
+		FATAL_ERROR,
+		DRAFT,
+		CREDITS,
+		RESET,
+		ADVENTURE,
+		TAVERN_BRAWL,
+	}
+}
