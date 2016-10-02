@@ -245,7 +245,7 @@ namespace HearthMirror
 
 		public static int NumChoiceCards() => TryGetInternal(() => Mirror.Root["ChoiceCardMgr"]?["s_instance"]?["m_lastShownChoices"]?["_size"] ?? 0);
 
-		public static bool IsPlayerEmotesVisible() => TryGetInternal(() => Mirror.Root["MulliganManager"]?["s_instance"]?["m_emotesShown"] ?? false);
+		public static bool IsPlayerEmotesVisible() => TryGetInternal(() => Mirror.Root["EmoteHandler"]?["s_instance"]?["m_emotesShown"] ?? false);
 
 		public static bool IsEnemyEmotesVisible() => TryGetInternal(() => Mirror.Root["EnemyEmoteHandler"]?["s_instance"]?["m_emotesShown"] ?? false);
 
